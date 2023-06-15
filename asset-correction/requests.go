@@ -49,7 +49,7 @@ func sendGetRequest(apiKey string, assetId string, payloads string) c.Item {
 		panic(err)
 	}
 
-	resAsset := c.Response{}
+	resAsset := c.SingleResponse{}
 	err = json.Unmarshal(body, &resAsset)
 	if err != nil {
 		panic(err)

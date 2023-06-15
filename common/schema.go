@@ -1,7 +1,11 @@
 package common
 
-type Response struct {
+type SingleResponse struct {
 	Item Item `json:"Item"`
+}
+
+type MultipleResponses struct {
+	Items []Item `json:"Items"`
 }
 
 type Item struct {
