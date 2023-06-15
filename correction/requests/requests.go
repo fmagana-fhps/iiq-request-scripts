@@ -1,14 +1,14 @@
-package main
+package requests
 
 import (
-	c "common"
+	"common"
 	"encoding/json"
 	"io"
 	"net/http"
 	"strings"
 )
 
-func sendGetRequest(apiKey string, assetId string, payloads string) c.Item {
+func GetAsset(apiKey string, assetId string, payloads string) common.Item {
 
 	if apiKey == "" {
 		panic("No API Key Provided")
@@ -49,7 +49,7 @@ func sendGetRequest(apiKey string, assetId string, payloads string) c.Item {
 		panic(err)
 	}
 
-	resAsset := c.SingleResponse{}
+	resAsset := common.SingleResponse{}
 	err = json.Unmarshal(body, &resAsset)
 	if err != nil {
 		panic(err)
@@ -58,7 +58,7 @@ func sendGetRequest(apiKey string, assetId string, payloads string) c.Item {
 	return resAsset.Item
 }
 
-func sendPostRequest(apiKey string, assetId string, payloads string) {
+func UpdateAsset(apiKey string, assetId string, payloads string) {
 
 	if apiKey == "" {
 		panic("No API Key Provided")

@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
+	"correction/requests"
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -22,13 +22,11 @@ func main() {
 	for scanner.Scan() {
 		serials = strings.Split(scanner.Text(), ",")
 
-		asset := sendGetRequest(string(key), serials[2], "")
+		asset := requests.GetAsset(string(key), serials[2], "")
 		asset.AssetTag = serials[1]
 		asset.SerialNumber = serials[0]
 		body, _ := json.Marshal(asset)
-		fmt.Println(string(body))
 
-		sendPostRequest(string(key), serials[2], string(body))
-		fmt.Println("200")
+		requests.UpdateAsset(string(key), serials[2], string(body))
 	}
 }
