@@ -32,9 +32,7 @@ func GetAsset(apiKey string, assetId string, payloads string) common.Item {
 	req.Header.Add("Cache-Control", "no-cache")
 	req.Header.Add("Accept-Encoding", "gzip deflate, br")
 	req.Header.Add("Accept-Language", "en-US,en;q=0.9")
-	req.Header.Add("Authorization", apiKey)
-	req.Header.Add("SiteId", "bb843135-5c45-4ca2-a1dd-88530abd42f9")
-	req.Header.Add("ProductId", "88df910c-91aa-e711-80c2-0004ffa00010")
+	req.Header.Add("Authorization", "Bearer "+apiKey)
 
 	res, err := client.Do(req)
 
@@ -73,7 +71,7 @@ func UpdateAsset(apiKey string, assetId string, payloads string) {
 	}
 
 	req.Header.Add("content-type", "application/json")
-	req.Header.Add("Authorization", apiKey)
+	req.Header.Add("Authorization", "Bearer "+apiKey)
 
 	res, err := http.DefaultClient.Do(req)
 
