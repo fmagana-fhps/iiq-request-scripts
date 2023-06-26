@@ -3,20 +3,17 @@ package main
 import (
 	"bufio"
 	"common"
+	"common/models"
 	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
-	"verification/verify"
+	"verification/api"
 
 	"github.com/google/uuid"
 )
 
 func main() {
-	key, err := os.ReadFile("notouch.txt")
-	if err != nil {
-		panic(`DO NOT TOUCH THIS FILE, YOU BROKE IT`)
-	}
 	assetsFile, err := os.Open("assets.txt")
 	if err != nil {
 		panic(`The file name needs to be: "assets.txt"`)
@@ -31,11 +28,12 @@ func main() {
 	scanner := bufio.NewScanner(assetsFile)
 	for scanner.Scan() {
 		asset := scanner.Text()
-		assetId := verify.GetAssetIdFromAssetTag(string(key), asset)
+		assetId := api.GetAssetIdFromAssetTag(asset)
+		fmt.Println(asset, assetId)
 
 		avid := uuid.New()
 
-		verification := common.AssetVerification{
+		verification := models.AssetVerification{
 			AssetVerificationId:     avid.String(),
 			AssetId:                 assetId,
 			CreatedDate:             "",
@@ -51,8 +49,6 @@ func main() {
 			panic(err)
 		}
 
-		v := verify.SendNewVerification(string(key), assetId, string(payload))
-
-		fmt.Println(asset, "audited on", v.AssetVerification.CreatedDate)
+		api.SendNewVerification(assetId, string(payload))
 	}
 }
