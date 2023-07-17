@@ -6,7 +6,7 @@ import (
 )
 
 func Get(url string, payload io.Reader) ([]byte, error) {
-	req, err := newRequest("GET", url, payload)
+	req, err := newIIQRequest("GET", url, payload)
 	if err != nil {
 		return nil, err
 	}
