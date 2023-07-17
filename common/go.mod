@@ -1,3 +1,3 @@
-module github.com/fmagana-fhps/iiq-request-scripts/common
+module common
 
 go 1.20
