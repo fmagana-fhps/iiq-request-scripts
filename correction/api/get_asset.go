@@ -4,11 +4,10 @@ import (
 	"common/models"
 	"common/requests"
 	"encoding/json"
-	"strings"
 )
 
 func GetAsset(assetId string) (models.Asset, error) {
-	body, err := requests.Get("assets/"+assetId, strings.NewReader(``))
+	body, err := requests.Get("assets/"+assetId, "")
 	if err != nil {
 		return models.Asset{}, err
 	}

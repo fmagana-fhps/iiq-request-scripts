@@ -4,11 +4,10 @@ import (
 	"common/models"
 	"common/requests"
 	"encoding/json"
-	"strings"
 )
 
 func GetAssetIdFromAssetTag(assetTag string) string {
-	body, err := requests.Get("assets/assettag/"+assetTag, strings.NewReader(``))
+	body, err := requests.Get("assets/assettag/"+assetTag, "")
 	if err != nil {
 		panic(err)
 	}

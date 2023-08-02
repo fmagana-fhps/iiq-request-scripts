@@ -4,11 +4,10 @@ import (
 	"common/models"
 	"common/requests"
 	"encoding/json"
-	"strings"
 )
 
-func SendNewVerification(assetId, payloads string) error {
-	body, err := requests.Post("assets/"+assetId+"/verifications/new", strings.NewReader(payloads))
+func SendNewVerification(assetId, payload string) error {
+	body, err := requests.Post("assets/"+assetId+"/verifications/new", payload)
 	if err != nil {
 		return err
 	}

@@ -2,11 +2,9 @@ package api
 
 import (
 	"common/requests"
-	"strings"
 )
 
-func UpdateAsset(assetId string, payloads string) error {
-	payload := strings.NewReader(payloads)
+func UpdateAsset(assetId string, payload string) error {
 	_, err := requests.Post("assets/"+assetId, payload)
 	if err != nil {
 		return err
