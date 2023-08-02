@@ -2,14 +2,14 @@ package requests
 
 import (
 	"common"
-	"io"
 	"net/http"
+	"strings"
 )
 
-func newIIQRequest(method, params string, payload io.Reader) (*http.Request, error) {
+func newIIQRequest(method, params, payload string) (*http.Request, error) {
 	cfg := common.GetConfigFile()
 	url := "https://" + cfg.SiteInstance + params
-	req, err := http.NewRequest(method, url, payload)
+	req, err := http.NewRequest(method, url, strings.NewReader(payload))
 	if err != nil {
 		return nil, err
 	}
@@ -21,9 +21,9 @@ func newIIQRequest(method, params string, payload io.Reader) (*http.Request, err
 	return req, nil
 }
 
-func NewRequest(method, site, params string, payload io.Reader) (*http.Request, error) {
+func NewRequest(method, site, params, payload string) (*http.Request, error) {
 	url := "https://" + site + params
-	req, err := http.NewRequest(method, url, payload)
+	req, err := http.NewRequest(method, url, strings.NewReader(payload))
 	if err != nil {
 		return nil, err
 	}

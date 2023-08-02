@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func Post(url string, payload io.Reader) ([]byte, error) {
+func Post(url, payload string) ([]byte, error) {
 	req, err := newIIQRequest("POST", url, payload)
 	if err != nil {
 		return nil, err

@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func Get(url string, payload io.Reader) ([]byte, error) {
+func Get(url, payload string) ([]byte, error) {
 	req, err := newIIQRequest("GET", url, payload)
 	if err != nil {
 		return nil, err
