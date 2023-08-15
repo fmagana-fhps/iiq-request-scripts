@@ -22,3 +22,4 @@ resources/
 *.csv
 *.txt
 *.json
+.env*
