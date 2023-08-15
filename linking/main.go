@@ -85,7 +85,8 @@ func GetAssets(length int, assetTags ...string) {
 		need = append(need, assetTags[i])
 	}
 
-	assets, err := client.AssetsByAssetTag(need...)
+	params := iiq.Parameters{PageSize: 50}
+	assets, err := client.AssetsByAssetTag(params, need...)
 	if err != nil {
 		log.Fatal(err)
 	}
