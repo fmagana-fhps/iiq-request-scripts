@@ -59,7 +59,7 @@ func main() {
 		}
 	}
 
-	file, err := os.Create("asset-locations-test.csv")
+	file, err := os.Create("asset-locations.csv")
 	if err != nil {
 		panic(err)
 	}
