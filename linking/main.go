@@ -1,3 +1,4 @@
+// fine to be left
 package main
 
 import (
@@ -86,11 +87,12 @@ func GetAssets(length int, assetTags ...string) {
 	}
 
 	params := iiq.Parameters{PageSize: 50}
-	assets, err := client.AssetsByAssetTag(params, need...)
+	resp, err := client.AssetsByAssetTag(params, need...)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	assets := resp.Body.Items
 	for i := range assets {
 		assetCache[assets[i].AssetTag] = assets[i]
 	}

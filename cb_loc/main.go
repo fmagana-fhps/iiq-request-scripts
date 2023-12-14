@@ -31,7 +31,7 @@ func init() {
 }
 
 func main() {
-	f := []byte(`"School Name","Serial Number"`)
+	contents := []byte(`Asset Tag,Device Purpose,Location,Notes,Purchased Date,Purchased Price,PO Number,Deployed Date,Warranty Expiration Date,Invoice Number,Vendor,Asset Status`)
 
 	res, err := requests.Post("assets/?$s=500&$o=AssetTag&$filter=(CategoryID%20eq%20'%5B7031883c-a881-e611-80f3-000c29ab80b0%5D')", "")
 	if err != nil {
@@ -43,26 +43,30 @@ func main() {
 	carts := schema.Items
 
 	for _, cart := range carts {
-		if cart.AssetID == "" {
+		if cart.AssetID == "" || cart.Location.Name != "Knapp Forest Elementary School" {
 			continue
 		}
 		params := iiq.Parameters{PageSize: 100}
-		links, err := client.GetLinkedAssets(params, cart.AssetID)
+		resp, err := client.LinkedAssets(params, cart.AssetID)
 		if err != nil {
 			log.Fatalf("%v", err)
 		}
-		for _, link := range links {
-			if link.SerialNumber == "" {
+		for _, cb := range resp.Body.Items {
+			if cb.SerialNumber == "" {
 				continue
 			}
-			f = append(f, []byte(fmt.Sprintf("\n\"%s\", %s", cart.Location.Name, link.SerialNumber))...)
+
+			tpl := "\n%v,Student,%v,%v,%v,%v,%v,%v,%v,%v,%v,%v"
+			row := fmt.Sprintf(tpl, cb.AssetTag, cart.Location.Name, cb.Notes, cb.PurchasedDate, cb.PurchasePrice, cb.PurchasePoNumber,
+				cb.DeployedDate, cb.WarrantyExpirationDate, cb.InvoiceNumber, cb.Vendor, cb.Status.Name)
+			contents = append(contents, []byte(row)...)
 		}
 	}
 
-	file, err := os.Create("asset-locations.csv")
+	file, err := os.Create("kf-cb-carts.csv")
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
-	file.Write(f)
+	file.Write(contents)
 }

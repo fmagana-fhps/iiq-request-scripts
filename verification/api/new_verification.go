@@ -1,9 +1,11 @@
+// Imported over
 package api
 
 import (
 	"common/models"
 	"common/requests"
 	"encoding/json"
+	"fmt"
 )
 
 func SendNewVerification(assetId, payload string) error {
@@ -18,6 +20,6 @@ func SendNewVerification(assetId, payload string) error {
 	if err != nil {
 		return err
 	}
-
+	fmt.Println(string(body))
 	return nil
 }

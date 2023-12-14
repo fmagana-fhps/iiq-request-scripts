@@ -5,12 +5,9 @@ import (
 	"common"
 	"common/models"
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 	"verification/api"
-
-	"github.com/google/uuid"
 )
 
 func main() {
@@ -29,19 +26,11 @@ func main() {
 	for scanner.Scan() {
 		asset := scanner.Text()
 		assetId := api.GetAssetIdFromAssetTag(asset)
-		fmt.Println(asset, assetId)
-
-		avid := uuid.New()
 
 		verification := models.AssetVerification{
-			AssetVerificationId:     avid.String(),
-			AssetId:                 assetId,
-			CreatedDate:             "",
-			VerifiedByUserId:        "10747f8a-b90b-ee11-907c-000d3a054ab7",
-			AssetVerificationTypeId: "web-manual", // could leave out but it still auto fills the same
-			IsSuccessful:            true,
-			Comments:                "Verified using the API",
-			LocationId:              locationId,
+			VerifiedByUserId: "10747f8a-b90b-ee11-907c-000d3a054ab7",
+			IsSuccessful:     true,
+			LocationId:       locationId,
 		}
 
 		payload, err := json.Marshal(verification)

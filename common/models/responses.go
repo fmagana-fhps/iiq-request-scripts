@@ -1,3 +1,4 @@
+// Imported over
 package models
 
 type SingleAsset struct {
